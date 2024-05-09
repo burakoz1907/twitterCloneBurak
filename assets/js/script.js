@@ -1,41 +1,3 @@
-// const SUPASE_URL ="https://xkrmjdmuxebgqqvuxrth.supabase.co"
-// const SUPASE_ANON_KEY ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhrcm1qZG11eGViZ3FxdnV4cnRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTUxNTg1NTIsImV4cCI6MjAzMDczNDU1Mn0.ay2DR3nKfsrLJYKBETJLMsy21XGZvzB1Ny2HaPfvvPY"
-// const form = document.querySelector("#form");
-
-// const _supabase = supabase.createClient(SUPASE_URL, SUPASE_ANON_KEY);
-
-
-// async function getData(){
-//     const { data, error } = await _supabase.from('users').select()
-//    if(error){
-//     return []
-//    }
-//    return data;
-// }
-
-// async function renderData(){
-//     const data = await getData();
-//     const list = document.querySelector("#list");
-//     data.forEach(items => {
-//         list.innerHTML +=`
-//         <li>${items.firstName}-${items.lastName}</li>
-//         `
-//     });
-// }
-// async function formDatas(e){
-//     e.preventDefault();
-//     const formData = new FormData(e.target)
-//     const formObj = Object.fromEntries(formData)
-//     const { data, error } = await _supabase.from('users').insert([
-//         { firstName: formObj.firstName, lastName: formObj.lastName },
-//     ]).select()
-//     return renderData();   
-// }
-
-// form.addEventListener("submit",formDatas);
-
-// renderData();
-
 const SUPASE_URL ="https://xkrmjdmuxebgqqvuxrth.supabase.co";
 const SUPASE_ANON_KEY ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhrcm1qZG11eGViZ3FxdnV4cnRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTUxNTg1NTIsImV4cCI6MjAzMDczNDU1Mn0.ay2DR3nKfsrLJYKBETJLMsy21XGZvzB1Ny2HaPfvvPY"
 const form = document.querySelector("#form");
@@ -72,7 +34,7 @@ async function renderData(){
             </div>
             <p class="tweet-p">${items.kullanici_yorum}</p>
             <button><img src="assets/image/retweet.svg"></button>
-            <button name="like" class="likeBtns"><img src="assets/image/like.svg">${items.like}</button>
+            <button id="${items.id}" name="like" class="likeBtns"><img src="assets/image/like.svg">${items.like}</button>
             <div class="buttons">
                 <img src="assets/image/image.svg">
                 <img src="assets/image/chart.svg">
@@ -112,10 +74,11 @@ async function likeBtns(){
             const datas = await getData();
             x = datas.find(d => d.id==this.id).like;
             x ++;
+            console.log(this.parentElement.dataset.commentid);
             const { data, error } = await _supabase
                 .from('twitter-clone')
                 .update({ like: x })
-                .eq('id', Number(this.parentElement.parentElement.dataset.commentid));
+                .eq('id', Number(this.parentElement.dataset.commentid));
                 return renderData();
             })
         }
